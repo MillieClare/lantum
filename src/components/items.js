@@ -6,6 +6,7 @@ moment().format();
 
 export function meetsCriteriaForShift(item, now, user) {
   // There must be a nicer way to do this without repetition, but still allowing the tests to pass.
+
   let shiftDateForTests = moment(item.startDatetime);
   return (
     !item.locum &&
