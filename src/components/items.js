@@ -16,22 +16,29 @@ export default function RenderShifts(props) {
       <h1>Available Shifts for {user.staffType}s</h1>
       <ol>
         {props.items[0].map(item => {
+          let now = moment();
           let shiftDate = moment(item.startDatetime);
           let dateOfShift = shiftDate.format("MMMM Do YYYY");
           let shiftStart = shiftDate.format("h:mm A");
           let shiftEnd = moment(item.endDatetime).format("h:mm A");
-          return (
-            <div>
-              <li>Shift at: {item.practice.name}</li>
-              <ul>
-                <li>Date: {dateOfShift}</li>
-                <li>Start time: {shiftStart}</li>
-                <li>Finish time: {shiftEnd}</li>
-                <li>Hourly rate: {item.hourlyRate}</li>
-                <li>Applicants: {item.applicationIds.length}</li>
-              </ul>
-            </div>
-          );
+          if (
+            !item.locum &&
+            user.staffType === item.staffType &&
+            item.status === "POSTED" &&
+            now < shiftDate
+          )
+            return (
+              <div>
+                <li>Shift at: {item.practice.name}</li>
+                <ul>
+                  <li>Date: {dateOfShift}</li>
+                  <li>Start time: {shiftStart}</li>
+                  <li>Finish time: {shiftEnd}</li>
+                  <li>Hourly rate: {item.hourlyRate}</li>
+                  <li>Applicants: {item.applicationIds.length}</li>
+                </ul>
+              </div>
+            );
         })}
       </ol>
     </div>
