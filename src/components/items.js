@@ -4,7 +4,8 @@ import { user } from "./user";
 import moment from "moment";
 moment().format();
 
-export function meetsCriteriaForShift(item, now, user, shiftDate) {
+export function meetsCriteriaForShift(item, now, user) {
+  let shiftDate = moment(item.startDatetime);
   return (
     !item.locum &&
     user.staffType === item.staffType &&
@@ -26,11 +27,10 @@ export default function RenderShifts(props) {
       <ol>
         {props.items[0].map(item => {
           let now = moment();
-          let shiftDate = moment(item.startDatetime);
           let dateOfShift = shiftDate.format("MMMM Do YYYY");
           let shiftStart = shiftDate.format("h:mm A");
           let shiftEnd = moment(item.endDatetime).format("h:mm A");
-          if (meetsCriteriaForShift(item, now, user, shiftDate)) {
+          if (meetsCriteriaForShift(item, now, user)) {
             return (
               <div>
                 <li>Shift at: {item.practice.name}</li>
