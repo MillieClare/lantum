@@ -7,6 +7,7 @@ import moment from "moment";
 moment().format();
 
 const currentDate = moment("2018-06-19T16:50:00+00:00");
+const notStaff = {};
 
 const user1 = {
   id: "1234",
@@ -25,10 +26,31 @@ const user2 = {
 };
 
 describe("Shifts", () => {
-  it.only("returns one shift where 'staffType' === 'gp'", () => {
+  it("returns one shift where 'staffType' === 'gp'", () => {
     let result = shifts.data.filter(item =>
       meetsCriteriaForShift(item, currentDate, user1)
     );
     expect(result).toHaveLength(6);
+  });
+
+  it("returns one shift where 'staffType' === 'practice nurse'", () => {
+    let result = shifts.data.filter(item =>
+      meetsCriteriaForShift(item, currentDate, user2)
+    );
+    expect(result).toHaveLength(1);
+  });
+
+  it("returns zero shifts where 'staffType' === 'bla'", () => {
+    let result = shifts.data.filter(item =>
+      meetsCriteriaForShift(item, currentDate, "bla")
+    );
+    expect(result).toHaveLength(0);
+  });
+
+  it("returns zero shifts where 'staffType' === '{ }'", () => {
+    let result = shifts.data.filter(item =>
+      meetsCriteriaForShift(item, currentDate, notStaff)
+    );
+    expect(result).toHaveLength(0);
   });
 });
