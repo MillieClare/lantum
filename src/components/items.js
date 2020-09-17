@@ -16,7 +16,7 @@ export default function RenderShifts(props) {
       <h1>Available Shifts for {user.staffType}s</h1>
       <ol>
         {props.items[0].map(item => {
-          let dateOfShift = moment(item.startDatetime).format("MMMM do YYYY");
+          let dateOfShift = moment(item.startDatetime).format("MMMM Do YYYY");
           let shiftStart = moment(item.startDatetime).format("h:mm A");
           let shiftEnd = moment(item.endDatetime).format("h:mm A");
           return (
