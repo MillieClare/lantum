@@ -11,20 +11,22 @@ export default function RenderShifts(props) {
   return (
     <div>
       <h1>Available Shifts for {user.staffType}s</h1>
-      {props.items[0].map(item => {
-        return (
-          <div>
-            <li>
-              Shift at: {item.practice.name}
-              Date: {item.startDatetime}
-              Start time: {item.startDatetime}
-              Finish time: {item.endDateTime}
-              Hourly rate: {item.hourlyRate}
-              Applicants: {item.applicationIds}
-            </li>
-          </div>
-        );
-      })}
+      <ol>
+        {props.items[0].map(item => {
+          return (
+            <div>
+              <li>Shift at: {item.practice.name}</li>
+              <ul>
+                <li>Date: {item.startDatetime}</li>
+                <li>Start time: {item.startDatetime}</li>
+                <li>Finish time: {item.endDatetime}</li>
+                <li>Hourly rate: {item.hourlyRate}</li>
+                <li>Applicants: {item.applicationIds.length}</li>
+              </ul>
+            </div>
+          );
+        })}
+      </ol>
     </div>
   );
 }
