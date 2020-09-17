@@ -15,12 +15,12 @@ export default function RenderShifts(props) {
         return (
           <div>
             <li>
-              {item.applicationIds}
-              {item.endDateTime}
-              {item.hourlyRate}
-              {item.id}
-              {item.practice.name}
-              {item.startDatetime}
+              Shift at: {item.practice.name}
+              Date: {item.startDatetime}
+              Start time: {item.startDatetime}
+              Finish time: {item.endDateTime}
+              Hourly rate: {item.hourlyRate}
+              Applicants: {item.applicationIds}
             </li>
           </div>
         );
