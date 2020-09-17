@@ -1,6 +1,9 @@
 import React from "react";
 import { user } from "./user";
 
+import moment from "moment";
+moment().format();
+
 export default function RenderShifts(props) {
   if (!props.items.length) {
     return (
