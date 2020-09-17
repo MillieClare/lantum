@@ -4,6 +4,18 @@ import { user } from "./user";
 import moment from "moment";
 moment().format();
 
+export function meetsCriteriaForShift(item, now, user) {
+  // There must be a nicer way to do this without repetition, but still allowing the tests to pass.
+
+  let shiftDateForTests = moment(item.startDatetime);
+  return (
+    !item.locum &&
+    user.staffType === item.staffType &&
+    item.status === "POSTED" &&
+    now < shiftDateForTests
+  );
+}
+
 export default function RenderShifts(props) {
   if (!props.items.length) {
     return (
@@ -21,12 +33,7 @@ export default function RenderShifts(props) {
           let dateOfShift = shiftDate.format("MMMM Do YYYY");
           let shiftStart = shiftDate.format("h:mm A");
           let shiftEnd = moment(item.endDatetime).format("h:mm A");
-          if (
-            !item.locum &&
-            user.staffType === item.staffType &&
-            item.status === "POSTED" &&
-            now < shiftDate
-          )
+          if (meetsCriteriaForShift(item, now, user)) {
             return (
               <div>
                 <li>Shift at: {item.practice.name}</li>
@@ -39,6 +46,7 @@ export default function RenderShifts(props) {
                 </ul>
               </div>
             );
+          }
         })}
       </ol>
     </div>
