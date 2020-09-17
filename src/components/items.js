@@ -5,12 +5,12 @@ import moment from "moment";
 moment().format();
 
 export function meetsCriteriaForShift(item, now, user) {
-  let shiftDate = moment(item.startDatetime);
+  let shiftDateForTests = moment(item.startDatetime);
   return (
     !item.locum &&
     user.staffType === item.staffType &&
     item.status === "POSTED" &&
-    now < shiftDate
+    now < shiftDateForTests
   );
 }
 
@@ -27,6 +27,7 @@ export default function RenderShifts(props) {
       <ol>
         {props.items[0].map(item => {
           let now = moment();
+          let shiftDate = moment(item.startDatetime);
           let dateOfShift = shiftDate.format("MMMM Do YYYY");
           let shiftStart = shiftDate.format("h:mm A");
           let shiftEnd = moment(item.endDatetime).format("h:mm A");
