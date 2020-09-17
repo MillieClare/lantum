@@ -25,6 +25,45 @@ const user2 = {
   staffTypeId: "2"
 };
 
+const correctJobPostGp = {
+  id: "1242",
+  status: "POSTED",
+  startDatetime: "2021-05-19T16:50:00+00:00",
+  endDatetime: "2018-05-19T19:15:00+00:00",
+  applicationIds: [],
+  practice: { id: "1234", name: "Central London Hospital" },
+  locum: null,
+  hourlyRate: 100,
+  staffType: "gp",
+  staffTypeId: "1"
+};
+
+const postHasLocum = {
+  id: "1242",
+  status: "POSTED",
+  startDatetime: "2021-05-19T16:50:00+00:00",
+  endDatetime: "2018-05-19T19:15:00+00:00",
+  applicationIds: [],
+  practice: { id: "1234", name: "Central London Hospital" },
+  locum: { id: "1234", firstName: "Jane", lastName: "Doe" },
+  hourlyRate: 100,
+  staffType: "gp",
+  staffTypeId: "1"
+};
+
+const postHasWrongStatus = {
+  id: "1242",
+  status: "COMPLETED",
+  startDatetime: "2021-05-19T16:50:00+00:00",
+  endDatetime: "2018-05-19T19:15:00+00:00",
+  applicationIds: [],
+  practice: { id: "1234", name: "Central London Hospital" },
+  locum: { id: "1234", firstName: "Jane", lastName: "Doe" },
+  hourlyRate: 100,
+  staffType: "gp",
+  staffTypeId: "1"
+};
+
 describe("Shifts", () => {
   it("returns one shift where 'staffType' === 'gp'", () => {
     let result = shifts.data.filter(item =>
@@ -52,5 +91,28 @@ describe("Shifts", () => {
       meetsCriteriaForShift(item, currentDate, notStaff)
     );
     expect(result).toHaveLength(0);
+  });
+});
+
+describe("staffType", () => {
+  it("returns true if all criteria is correct", () => {
+    let result = meetsCriteriaForShift(correctJobPostGp, currentDate, user1);
+    expect(result).toBe(true);
+  });
+
+  it("returns false if all criteria is correct except locum", () => {
+    let result = meetsCriteriaForShift(postHasLocum, currentDate, user1);
+    expect(result).toBe(false);
+  });
+
+  it("returns false if all criteria is correct except date has passed", () => {
+    let newNow = moment("2025-06-19T16:50:00+00:00");
+    let result = meetsCriteriaForShift(correctJobPostGp, newNow, user1);
+    expect(result).toBe(false);
+  });
+
+  it("returns false if all criteria is correct except status", () => {
+    let result = meetsCriteriaForShift(postHasWrongStatus, currentDate, user1);
+    expect(result).toBe(false);
   });
 });
