@@ -41,7 +41,7 @@ export default function RenderShifts(props) {
                   <li>Date: {dateOfShift}</li>
                   <li>Start time: {shiftStart}</li>
                   <li>Finish time: {shiftEnd}</li>
-                  <li>Hourly rate: {item.hourlyRate}</li>
+                  <li>Hourly rate: £{item.hourlyRate}</li>
                   <li>Applicants: {item.applicationIds.length}</li>
                 </ul>
               </div>

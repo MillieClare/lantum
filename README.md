@@ -3,7 +3,7 @@
 ## Usage
 
 - Made using `create-react-app`
-- Clone the repo, cd into the file, `npm install`
+- Clone the repo, cd into the directory and run, `npm install`
 - To run the application `npm start` to run the tests `npm run tests`
 
 ## If I had more time
